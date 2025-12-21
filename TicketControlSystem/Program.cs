@@ -59,6 +59,14 @@ builder.Services.AddScoped<IValidationService, ValidationService>();
 builder.Services.AddScoped<IStatisticsService, StatisticsService>();
 builder.Services.AddHostedService<DeviceStatusChecker>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder => builder
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader());
+});
+
 builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
     {
         options.Password.RequireDigit = false;
