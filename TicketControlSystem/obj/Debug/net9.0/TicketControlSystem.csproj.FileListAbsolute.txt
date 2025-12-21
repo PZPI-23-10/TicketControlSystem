@@ -471,3 +471,5 @@ C:\Users\kiyak\source\repos\TicketControlSystem\TicketControlSystem\obj\Debug\ne
 C:\Users\kiyak\source\repos\TicketControlSystem\TicketControlSystem\obj\Debug\net9.0\TicketControlSystem.pdb
 C:\Users\kiyak\source\repos\TicketControlSystem\TicketControlSystem\obj\Debug\net9.0\TicketControlSystem.genruntimeconfig.cache
 C:\Users\kiyak\source\repos\TicketControlSystem\TicketControlSystem\obj\Debug\net9.0\ref\TicketControlSystem.dll
+C:\Users\kiyak\source\repos\TicketControlSystem\TicketControlSystem\bin\Debug\net9.0\Npgsql.dll
+C:\Users\kiyak\source\repos\TicketControlSystem\TicketControlSystem\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
