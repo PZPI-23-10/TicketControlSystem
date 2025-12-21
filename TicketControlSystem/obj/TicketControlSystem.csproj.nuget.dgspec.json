@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kiyak\\RiderProjects\\Ticket control system\\TicketControlSystem\\TicketControlSystem.csproj": {}
+    "C:\\Users\\kiyak\\source\\repos\\TicketControlSystem\\TicketControlSystem\\TicketControlSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kiyak\\RiderProjects\\Ticket control system\\TicketControlSystem\\TicketControlSystem.csproj": {
+    "C:\\Users\\kiyak\\source\\repos\\TicketControlSystem\\TicketControlSystem\\TicketControlSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kiyak\\RiderProjects\\Ticket control system\\TicketControlSystem\\TicketControlSystem.csproj",
+        "projectUniqueName": "C:\\Users\\kiyak\\source\\repos\\TicketControlSystem\\TicketControlSystem\\TicketControlSystem.csproj",
         "projectName": "TicketControlSystem",
-        "projectPath": "C:\\Users\\kiyak\\RiderProjects\\Ticket control system\\TicketControlSystem\\TicketControlSystem.csproj",
+        "projectPath": "C:\\Users\\kiyak\\source\\repos\\TicketControlSystem\\TicketControlSystem\\TicketControlSystem.csproj",
         "packagesPath": "C:\\Users\\kiyak\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kiyak\\RiderProjects\\Ticket control system\\TicketControlSystem\\obj\\",
+        "outputPath": "C:\\Users\\kiyak\\source\\repos\\TicketControlSystem\\TicketControlSystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

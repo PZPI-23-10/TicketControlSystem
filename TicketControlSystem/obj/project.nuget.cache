@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XG/5CJJtxro=",
+  "dgSpecHash": "pg0xnB4Fntk=",
   "success": true,
-  "projectFilePath": "C:\\Users\\kiyak\\RiderProjects\\Ticket control system\\TicketControlSystem\\TicketControlSystem.csproj",
+  "projectFilePath": "C:\\Users\\kiyak\\source\\repos\\TicketControlSystem\\TicketControlSystem\\TicketControlSystem.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kiyak\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\kiyak\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
