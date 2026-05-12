@@ -24,14 +24,25 @@ public class TicketService(ApplicationDbContext context) : ITicketService
         {
             throw new UnauthorizedAccessException("You are not authorized to issue tickets for this event.");
         }
+
+        User? ownerUser = null;
+        if (request.OwnerUserId.HasValue)
+        {
+            ownerUser = await context.Users.FindAsync(request.OwnerUserId.Value);
+            if (ownerUser == null)
+                throw new KeyNotFoundException("Ticket owner user not found.");
+        }
         
         string uniqueId = Guid.NewGuid().ToString();
         
         var ticket = new Ticket
         {
             TariffId = tariff.Id,
+            OwnerUserId = ownerUser?.Id,
             TicketUid = uniqueId,
-            TicketOwnerName = request.TicketOwnerName,
+            TicketOwnerName = string.IsNullOrWhiteSpace(request.TicketOwnerName)
+                ? ownerUser?.UserName ?? ownerUser?.Email ?? string.Empty
+                : request.TicketOwnerName,
             Status = "active",
             MaxUses = request.MaxUses,
             CurrentUses = 0,
@@ -45,26 +56,16 @@ public class TicketService(ApplicationDbContext context) : ITicketService
         return MapToResponse(ticket, tariff.Name, tariff.Event.Name);
     }
 
-    public async Task<TicketResponse> GetTicketByIdPublicAsync(int userId)
+    public async Task<TicketResponse?> GetTicketByIdPublicAsync(int ticketId)
     {
-        var myticket = context.Tickets
+        var myticket = await context.Tickets
             .Include(t => t.Tariff)
             .ThenInclude(tr => tr.Event)
-            .FirstOrDefault(t => t.Id == userId);
+            .FirstOrDefaultAsync(t => t.Id == ticketId);
+
+        if (myticket == null) return null;
         
-        var ticket = new Ticket
-        {
-            TariffId = myticket.Id,
-            TicketUid = myticket.TicketUid,
-            TicketOwnerName = myticket.TicketOwnerName,
-            Status = myticket.Status,
-            MaxUses = myticket.MaxUses,
-            CurrentUses = myticket.CurrentUses,
-            ValidFrom = myticket.ValidFrom,
-            ValidTo = myticket.ValidTo
-        };
-        
-        return MapToResponse(ticket, myticket.Tariff.Name, myticket.Tariff.Event.Name);
+        return MapToResponse(myticket, myticket.Tariff.Name, myticket.Tariff.Event.Name);
     }
 
     public async Task<IEnumerable<TicketResponse>> GetTicketsByEventIdAsync(int? eventId)
@@ -81,6 +82,17 @@ public class TicketService(ApplicationDbContext context) : ITicketService
         }
 
         var tickets = await query.ToListAsync();
+
+        return tickets.Select(t => MapToResponse(t, t.Tariff.Name, t.Tariff.Event.Name));
+    }
+
+    public async Task<IEnumerable<TicketResponse>> GetTicketsByOwnerUserIdAsync(int ownerUserId)
+    {
+        var tickets = await context.Tickets
+            .Include(t => t.Tariff)
+            .ThenInclude(tr => tr.Event)
+            .Where(t => t.OwnerUserId == ownerUserId)
+            .ToListAsync();
 
         return tickets.Select(t => MapToResponse(t, t.Tariff.Name, t.Tariff.Event.Name));
     }
@@ -107,6 +119,7 @@ public class TicketService(ApplicationDbContext context) : ITicketService
         return new TicketResponse
         {
             Id = ticket.Id,
+            OwnerUserId = ticket.OwnerUserId,
             TicketUid = ticket.TicketUid,
             OwnerName = ticket.TicketOwnerName,
             TariffName = tariffName,

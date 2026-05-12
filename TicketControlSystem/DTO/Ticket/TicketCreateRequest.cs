@@ -7,7 +7,8 @@ public class TicketCreateRequest
     [Required]
     public int TariffId { get; set; }
 
-    [Required]
+    public int? OwnerUserId { get; set; }
+
     public string TicketOwnerName { get; set; } = string.Empty; 
     
     public DateTime? ValidFrom { get; set; } 

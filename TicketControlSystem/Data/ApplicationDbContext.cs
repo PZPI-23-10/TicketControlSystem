@@ -47,6 +47,12 @@ namespace Ticket_control_system.Data
                 .WithOne(v => v.Ticket)
                 .HasForeignKey(v => v.TicketId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Ticket>()
+                .HasOne(t => t.OwnerUser)
+                .WithMany(u => u.Tickets)
+                .HasForeignKey(t => t.OwnerUserId)
+                .OnDelete(DeleteBehavior.SetNull);
             
             modelBuilder.Entity<Device>(entity =>
             {

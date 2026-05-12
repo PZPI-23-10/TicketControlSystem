@@ -48,6 +48,15 @@ public class TicketController(ITicketService ticketService) : ControllerBase
             return StatusCode(403, ex.Message);
         }
     }
+
+    [HttpGet("my")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public async Task<IActionResult> GetMyTickets()
+    {
+        var userId = GetCurrentUserId();
+        var tickets = await ticketService.GetTicketsByOwnerUserIdAsync(userId);
+        return Ok(tickets);
+    }
     
     [HttpDelete("{id}")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

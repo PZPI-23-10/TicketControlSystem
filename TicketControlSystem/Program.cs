@@ -59,6 +59,12 @@ builder.Services.AddScoped<IValidationService, ValidationService>();
 builder.Services.AddScoped<IStatisticsService, StatisticsService>();
 builder.Services.AddHostedService<DeviceStatusChecker>();
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.User.AllowedUserNameCharacters =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюя";
+});
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder => builder
@@ -86,6 +92,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+    await DatabaseSeeder.SeedAsync(context, userManager, roleManager);
+}
 
 if (app.Environment.IsDevelopment())
 {

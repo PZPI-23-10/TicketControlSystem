@@ -3,6 +3,7 @@
 public class TicketResponse
 {
     public int Id { get; set; }
+    public int? OwnerUserId { get; set; }
     public string TicketUid { get; set; } = string.Empty;
     public string TariffName { get; set; } = string.Empty;
     public string EventName { get; set; } = string.Empty;

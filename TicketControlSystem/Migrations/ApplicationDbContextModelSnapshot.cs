@@ -256,6 +256,9 @@ namespace Ticket_control_system.Migrations
                     b.Property<int>("MaxUses")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("OwnerUserId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("text");
@@ -278,6 +281,8 @@ namespace Ticket_control_system.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnerUserId");
 
                     b.HasIndex("TariffId");
 
@@ -472,11 +477,18 @@ namespace Ticket_control_system.Migrations
 
             modelBuilder.Entity("TicketControlSystem.Data.Models.Ticket", b =>
                 {
+                    b.HasOne("TicketControlSystem.Data.Models.User", "OwnerUser")
+                        .WithMany("Tickets")
+                        .HasForeignKey("OwnerUserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("TicketControlSystem.Data.Models.Tariff", "Tariff")
                         .WithMany("Tickets")
                         .HasForeignKey("TariffId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("OwnerUser");
 
                     b.Navigation("Tariff");
                 });
@@ -523,6 +535,8 @@ namespace Ticket_control_system.Migrations
             modelBuilder.Entity("TicketControlSystem.Data.Models.User", b =>
                 {
                     b.Navigation("OwnedEvents");
+
+                    b.Navigation("Tickets");
                 });
 #pragma warning restore 612, 618
         }
